@@ -1,0 +1,13 @@
+# Target labels
+ sensor_client
+# Source files and their labels
+C:/Users/Gary/Desktop/Zephyr/sensor_client/52/_sysbuild/sysbuild/images/CMakeFiles/sensor_client
+C:/Users/Gary/Desktop/Zephyr/sensor_client/52/_sysbuild/sysbuild/images/CMakeFiles/sensor_client.rule
+C:/Users/Gary/Desktop/Zephyr/sensor_client/52/_sysbuild/sysbuild/images/CMakeFiles/sensor_client-complete.rule
+C:/Users/Gary/Desktop/Zephyr/sensor_client/52/_sysbuild/sysbuild/images/sensor_client-prefix/src/sensor_client-stamp/sensor_client-build.rule
+C:/Users/Gary/Desktop/Zephyr/sensor_client/52/_sysbuild/sysbuild/images/sensor_client-prefix/src/sensor_client-stamp/sensor_client-configure.rule
+C:/Users/Gary/Desktop/Zephyr/sensor_client/52/_sysbuild/sysbuild/images/sensor_client-prefix/src/sensor_client-stamp/sensor_client-download.rule
+C:/Users/Gary/Desktop/Zephyr/sensor_client/52/_sysbuild/sysbuild/images/sensor_client-prefix/src/sensor_client-stamp/sensor_client-install.rule
+C:/Users/Gary/Desktop/Zephyr/sensor_client/52/_sysbuild/sysbuild/images/sensor_client-prefix/src/sensor_client-stamp/sensor_client-mkdir.rule
+C:/Users/Gary/Desktop/Zephyr/sensor_client/52/_sysbuild/sysbuild/images/sensor_client-prefix/src/sensor_client-stamp/sensor_client-patch.rule
+C:/Users/Gary/Desktop/Zephyr/sensor_client/52/_sysbuild/sysbuild/images/sensor_client-prefix/src/sensor_client-stamp/sensor_client-update.rule

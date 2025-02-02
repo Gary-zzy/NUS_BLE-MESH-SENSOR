@@ -1,19 +1,21 @@
 /*
- * Copyright (c) 2021 Nordic Semiconductor ASA
+ * Copyright (c) 2020 Nordic Semiconductor ASA
  *
  * SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
  */
 
 /** @file
- *  @brief Nordic mesh and peripheral coexistence sample
+ *  @brief Nordic mesh sensor observer sample
  */
-
 #include <zephyr/bluetooth/bluetooth.h>
 #include <bluetooth/mesh/models.h>
 #include <bluetooth/mesh/dk_prov.h>
 #include <dk_buttons_and_leds.h>
 #include "model_handler.h"
-#include "lb_service_handler.h"
+
+
+#include "nus_handler.h"//头文件
+
 
 static void bt_ready(int err)
 {
@@ -36,6 +38,10 @@ static void bt_ready(int err)
 		return;
 	}
 
+	
+		
+
+
 	err = bt_mesh_init(bt_mesh_dk_prov_init(), model_handler_init());
 	if (err) {
 		printk("Initializing mesh failed (err %d)\n", err);
@@ -51,9 +57,16 @@ static void bt_ready(int err)
 
 	printk("Mesh initialized\n");
 
-	lbs_handler_init();
-
+/* 初始化 NUS handler */
+	err = nus_handler_init();
+	if (err) {
+		printk("NUS handler initialization failed (err %d)\n", err);
+		return;
+	}
+	printk("NUS handler initialized\n");
+	 
 }
+
 
 int main(void)
 {

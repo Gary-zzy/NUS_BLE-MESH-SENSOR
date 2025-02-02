@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Nordic Semiconductor ASA
+ * Copyright (c) 2020 Nordic Semiconductor ASA
  *
  * SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
  */
@@ -17,8 +17,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-void ble_conn_init(void);
 
 const struct bt_mesh_comp *model_handler_init(void);
 

@@ -1,0 +1,12 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "nrf-connect",
+			"request": "launch",
+			"name": "Launch sensor_client\\52",
+			"config": "c:/Users/Gary/Desktop/Zephyr/sensor_client/52",
+			"runToEntryPoint": "main"
+		}
+	]
+}

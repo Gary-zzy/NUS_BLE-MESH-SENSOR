@@ -1,140 +1,136 @@
-.. _bluetooth_ble_peripheral_lbs_coex:
+.. _bluetooth_mesh_sensor_client:
 
-Bluetooth Mesh: Coexistence with other LE services
-##################################################
+Bluetooth Mesh: Sensor observer
+###############################
 
 .. contents::
    :local:
    :depth: 2
 
-This sample demonstrates how to combine Bluetooth® Mesh and another Bluetooth Low Energy (LE) service in a single application.
+The Bluetooth® Mesh sensor observer sample demonstrates how to set up a basic Bluetooth Mesh :ref:`bt_mesh_sensor_cli_readme` model application that gets sensor data from one :ref:`bt_mesh_sensor_srv_readme` model.
+Eight different sensor types are used to showcase different ways for the server to publish data.
+In addition, the samples demonstrate usage of both :ref:`single-channel sensor types and sensor series types <bt_mesh_sensor_types_channels>`, as well as how to add and write to a sensor setting.
+
+.. note::
+   This sample must be paired with :ref:`bluetooth_mesh_sensor_server` to show any functionality.
+   The observer has no sensor data, and is dependent on a mesh sensor to provide it.
 
 Requirements
 ************
 
-This sample supports the following development kits:
+The sample supports the following development kits:
 
 .. table-from-sample-yaml::
 
-The sample also requires a smartphone with `nRF Connect for Mobile`_ and one of the following apps:
+The sample also requires a smartphone with Nordic Semiconductor's nRF Mesh mobile app installed in one of the following versions:
 
 * `nRF Mesh mobile app for Android`_
 * `nRF Mesh mobile app for iOS`_
 
+Additionally, the sample requires the :ref:`bluetooth_mesh_sensor_server` sample application, programmed on a separate development kit and configured according to mesh sensor sample's :ref:`testing guide <bluetooth_mesh_sensor_server_testing>`.
+
 Overview
 ********
 
-The purpose of this sample is to showcase an application where another Bluetooth LE service can operate independently of Bluetooth Mesh.
-It combines the features of the :ref:`peripheral_lbs` sample and the :ref:`bluetooth_mesh_light` sample into a single application.
+The following Bluetooth Mesh sensor types, and their settings, are used in this sample:
 
-The :ref:`lbs_readme` controls the state of a LED and monitors the state of a button on the device.
-Bluetooth Mesh controls and monitors the state of a separate LED on the device.
-The LBS and Bluetooth Mesh do not share any states on the device and operate independently of each other.
+* :c:var:`bt_mesh_sensor_present_dev_op_temp` - Periodically requested by the client and published by the server according to its publishing period.
 
-To be truly independent, the LBS must be able to advertise its presence independently of Bluetooth Mesh.
-Because Bluetooth Mesh uses the advertiser as its main channel of communication, you must configure the application to allow sharing of this resource.
-To achieve this, extended advertising is enabled with two simultaneous advertising sets.
-One of these sets is used to handle all Bluetooth Mesh communication, while the other is used for advertising the LBS.
+  * :c:var:`bt_mesh_sensor_dev_op_temp_range_spec` - Used as a setting for the :c:var:`bt_mesh_sensor_present_dev_op_temp` sensor type to set the range of reported temperatures.
 
-.. note::
-   Extended advertising is a requirement for achieving multiple advertisers in this sample.
+* :c:var:`bt_mesh_sensor_rel_runtime_in_a_dev_op_temp_range` - Periodically requested by the client.
+* :c:var:`bt_mesh_sensor_presence_detected` - Published when a button is pressed on the server.
 
-LED Button Service
-==================
+  * :c:var:`bt_mesh_sensor_motion_threshold` - Used as a setting for the :c:var:`bt_mesh_sensor_presence_detected` sensor type to set the time (0-10 seconds) before the presence is detected.
 
-.. tabs::
+* :c:var:`bt_mesh_sensor_time_since_presence_detected` - Periodically requested by the client and published by the server according to its publishing period.
+* :c:var:`bt_mesh_sensor_motion_sensed` - Published when a button is pressed on the server.
+* :c:var:`bt_mesh_sensor_time_since_motion_sensed` - Periodically requested by the client and published by the server according to its publishing period.
+* :c:var:`bt_mesh_sensor_present_amb_light_level` - Periodically requested by the client and published by the server according to its publishing period, and published when a button is pressed on the server.
 
-   .. group-tab:: nRF21, nRF52 and nRF53 DKs
+  * :c:var:`bt_mesh_sensor_gain` - Used as a setting for the :c:var:`bt_mesh_sensor_present_amb_light_level` sensor type to set the gain the ambient light sensor value is multiplied with.
+  * :c:var:`bt_mesh_sensor_present_amb_light_level` - Used as a setting for the :c:var:`bt_mesh_sensor_present_amb_light_level` sensor type to calculate sensor gain based on measured reference ambient light level. This value does only have a set command.
 
-      When connected, the :ref:`lbs_readme` sends the state of **Button 1** on the development kit to the connected device, such as a phone or tablet.
-      The mobile application on the device can display the received button state and control the state of **LED 2** on the development kit.
+* :c:var:`bt_mesh_sensor_people_count` - Published when a button is pressed on the server.
 
-   .. group-tab:: nRF54 DKs
-
-      When connected, the :ref:`lbs_readme` sends the state of **Button 0** on the development kit to the connected device, such as a phone or tablet.
-      The mobile application on the device can display the received button state and control the state of **LED 1** on the development kit.
-
-Mesh provisioning
-=================
+Provisioning
+============
 
 The provisioning is handled by the :ref:`bt_mesh_dk_prov`.
 It supports four types of out-of-band (OOB) authentication methods, and uses the Hardware Information driver to generate a deterministic UUID to uniquely represent the device.
 
-Mesh models
-===========
+Use `nRF Mesh mobile app`_ for provisioning and configuring of models supported by the sample.
 
-The following table shows the mesh light composition data for this sample:
+Models
+======
 
-   +---------------------+
-   |  Element 1          |
-   +=====================+
-   | Config Server       |
-   +---------------------+
-   | Health Server       |
-   +---------------------+
-   | Gen. OnOff Server   |
-   +---------------------+
+The following table shows the mesh sensor observer composition data for this sample:
+
+   +---------------+
+   |  Element 1    |
+   +===============+
+   | Config Server |
+   +---------------+
+   | Health Server |
+   +---------------+
+   | Sensor Client |
+   +---------------+
 
 The models are used for the following purposes:
 
-.. tabs::
+* Config Server allows configurator devices to configure the node remotely.
+* Health Server provides ``attention`` callbacks that are used during provisioning to call your attention to the device.
+  These callbacks trigger blinking of the LEDs.
+* Sensor Client gets sensor data from one or more :ref:`Sensor Server(s) <bt_mesh_sensor_srv_readme>`.
 
-   .. group-tab:: nRF21, nRF52 and nRF53 DKs
-
-      * :ref:`bt_mesh_onoff_srv_readme` instance in element 1 controls **LED 1**.
-      * Config Server allows configurator devices to configure the node remotely.
-      * Health Server provides ``attention`` callbacks that are used during provisioning to call your attention to the device.
-        These callbacks trigger blinking of the LEDs.
-
-   .. group-tab:: nRF54 DKs
-
-      * :ref:`bt_mesh_onoff_srv_readme` instance in element 1 controls **LED 0**.
-      * Config Server allows configurator devices to configure the node remotely.
-      * Health Server provides ``attention`` callbacks that are used during provisioning to call your attention to the device.
-        These callbacks trigger blinking of the LEDs.
-
-The model handling is implemented in :file:`src/model_handler.c`, which uses the :ref:`dk_buttons_and_leds_readme` library to control each LED on the development kit according to the matching received messages of Generic OnOff Server.
+The model handling is implemented in :file:`src/model_handler.c`.
+A :c:struct:`k_work_delayable` item is submitted recursively to periodically request sensor data.
 
 User interface
 **************
 
+Buttons:
+   Can be used to input the OOB authentication value during provisioning.
+   All buttons have the same functionality during the provisioning procedure.
+
+Once the provisioning procedure has completed, the buttons will have the following functionality:
+
 .. tabs::
 
-   .. group-tab:: nRF21, nRF52 and nRF53 DKs
-
-      Buttons (Common):
-         Can be used to input the OOB authentication value during provisioning.
-         All buttons have the same functionality during this procedure.
+   .. group-tab:: nRF21 and nRF52 DKs
 
       Button 1:
-         Send a notification through the LED Button Service with the button pressed or released state.
+         Sends a get message for the :c:var:`bt_mesh_sensor_dev_op_temp_range_spec` setting of the :c:var:`bt_mesh_sensor_present_dev_op_temp` sensor.
 
-      LEDs (Common):
-         Show the OOB authentication value during provisioning if the Push button OOB method is used.
+      Button 2:
+         Sends a set message for the :c:var:`bt_mesh_sensor_dev_op_temp_range_spec` setting of the :c:var:`bt_mesh_sensor_present_dev_op_temp` sensor, switching between the ranges specified in the :c:var:`temp_ranges` variable.
 
-      LED 1:
-         Controlled by the Generic OnOff Server.
+      Button 3:
+         Sends a get message for a descriptor, requesting information about the :c:var:`bt_mesh_sensor_present_dev_op_temp` sensor.
 
-      LED 2:
-         Controlled remotely by the LED Button Service from the connected device.
+      Button 4:
+         Sends a set message for the :c:var:`bt_mesh_sensor_motion_threshold` setting of the :c:var:`bt_mesh_sensor_presence_detected` sensor, switching between the ranges specified in the :c:var:`presence_motion_threshold` variable.
 
    .. group-tab:: nRF54 DKs
 
-      Buttons (Common):
-         Can be used to input the OOB authentication value during provisioning.
-         All buttons have the same functionality during this procedure.
-
       Button 0:
-         Send a notification through the LED Button Service with the button pressed or released state.
+         Sends a get message for the :c:var:`bt_mesh_sensor_dev_op_temp_range_spec` setting of the :c:var:`bt_mesh_sensor_present_dev_op_temp` sensor.
 
-      LEDs (Common):
-         Show the OOB authentication value during provisioning if the Push button OOB method is used.
+      Button 1:
+         Sends a set message for the :c:var:`bt_mesh_sensor_dev_op_temp_range_spec` setting of the :c:var:`bt_mesh_sensor_present_dev_op_temp` sensor, switching between the ranges specified in the :c:var:`temp_ranges` variable.
 
-      LED 0:
-         Controlled by the Generic OnOff Server.
+      Button 2:
+         Sends a get message for a descriptor, requesting information about the :c:var:`bt_mesh_sensor_present_dev_op_temp` sensor.
 
-      LED 1:
-         Controlled remotely by the LED Button Service from the connected device.
+      Button 3:
+         Sends a set message for the :c:var:`bt_mesh_sensor_motion_threshold` setting of the :c:var:`bt_mesh_sensor_presence_detected` sensor, switching between the ranges specified in the :c:var:`presence_motion_threshold` variable.
+
+Terminal:
+   All sensor values gathered from the server are printed over UART.
+   For more details, see :ref:`testing`.
+
+.. note::
+   Some sensor and setting values need to be get/set through shell commands, as there is not enough buttons on the board for all sensor and setting values.
 
 Configuration
 *************
@@ -146,9 +142,8 @@ Source file setup
 
 This sample is split into the following source files:
 
-* :file:`main.c` used to handle initialization.
-* :file:`model_handler.c` used to handle mesh models.
-* :file:`lb_service_handler.c` used to handle the LBS interaction.
+* A :file:`main.c` file to handle initialization.
+* One additional file for handling Bluetooth Mesh models, :file:`model_handler.c`.
 
 FEM support
 ===========
@@ -158,20 +153,29 @@ FEM support
 Building and running
 ********************
 
-.. |sample path| replace:: :file:`samples/bluetooth/mesh/ble_peripheral_lbs_coex`
+.. |sample path| replace:: :file:`samples/bluetooth/mesh/sensor_client`
 
 .. include:: /includes/build_and_run.txt
 
-Testing Generic OnOff Server (Bluetooth Mesh)
-=============================================
+.. _bluetooth_mesh_sensor_client_testing:
+
+Testing
+=======
+
+.. note::
+   The mesh sensor observer sample cannot demonstrate any functionality on its own, and needs a device with the :ref:`bluetooth_mesh_sensor_server` sample running in the same mesh network.
+   Before testing the mesh sensor observer, go through the mesh sensor's :ref:`testing guide <bluetooth_mesh_sensor_server_testing>` with a different development kit.
 
 After programming the sample to your development kit, you can test it by using a smartphone with `nRF Mesh mobile app`_ installed.
-Testing consists of provisioning the device and configuring it for communication with the Bluetooth Mesh models.
+Testing consists of provisioning the device and configuring it for communication with the mesh models.
+
+All sensor values gathered from the server are printed over UART.
+For more details, see :ref:`testing`.
 
 Provisioning the device
 -----------------------
 
-.. |device name| replace:: :guilabel:`Mesh Light`
+.. |device name| replace:: :guilabel:`Mesh Sensor Observer`
 
 .. include:: /includes/mesh_device_provisioning.txt
 
@@ -180,92 +184,57 @@ Configuring models
 
 See :ref:`ug_bt_mesh_model_config_app` for details on how to configure the mesh models with the nRF Mesh mobile app.
 
-Configure the Generic OnOff Server model on the root element of the **Mesh and Peripheral Coex** node:
+Configure the Sensor Client model on the **Mesh Sensor Observer** node:
 
-.. tabs::
+* Bind the model to **Application Key 1**.
+* Set the publication parameters:
 
-   .. group-tab:: nRF21, nRF52 and nRF53 DKs
+  * Destination/publish address: Select an existing group or create a new one, but make sure that the Sensor Server subscribes to the same group.
+  * Retransmit count: Set the count to zero (**Disabled**), to avoid duplicate logging in the UART terminal.
 
-      1. Bind the model to **Application Key 1**.
-         Once the model is bound to the application key, you can control **LED 1** on the device.
+* Set the subscription parameters: Select an existing group or create a new one, but make sure that the Sensor Server publishes to the same group.
 
-      #. In the model view, tap :guilabel:`ON`/:guilabel:`OFF` (one of the Generic On Off Controls).
-         This switches the **LED 1** on the development kit on and off respectively.
+The Sensor Client model is now configured and able to receive data from the Sensor Server.
 
-   .. group-tab:: nRF54 DKs
+Interacting with the sample through shell
+-----------------------------------------
 
-      1. Bind the model to **Application Key 1**.
-         Once the model is bound to the application key, you can control **LED 0** on the device.
+1. Connect the development kit to the computer using a USB cable.
+   The development kit is assigned a COM port (Windows), ttyACM device (Linux) or tty.usbmodem (MacOS).
+#. |connect_terminal_specific_ANSI|
+#. Enable local echo in the terminal to see the text you are typing.
+#. Enable mesh shell by typing ``mesh init``
 
-      #. In the model view, tap :guilabel:`ON`/:guilabel:`OFF` (one of the Generic On Off Controls).
-         This switches the **LED 0** on the development kit on and off respectively.
+After completing the steps above, a command can be given to the client.
+See :ref:`bt_mesh_sensor_cli_readme` and :ref:`bluetooth_mesh_shell` for information about shell commands.
 
-Testing LED Button Service (peripheral)
-=======================================
+SensorID/SettingID used in the shell commands are:
 
-After programming the sample to your development kit, test it by performing the following steps:
+* :c:var:`bt_mesh_sensor_present_dev_op_temp` - 0x0054
+* :c:var:`bt_mesh_sensor_dev_op_temp_range_spec` - 0x0013
+* :c:var:`bt_mesh_sensor_rel_runtime_in_a_dev_op_temp_range` - 0x0064
+* :c:var:`bt_mesh_sensor_presence_detected` - 0x004D
+* :c:var:`bt_mesh_sensor_time_since_presence_detected` - 0x0069
+* :c:var:`bt_mesh_sensor_motion_threshold` - 0x0043
+* :c:var:`bt_mesh_sensor_present_amb_light_level` - 0x004E
+* :c:var:`bt_mesh_sensor_gain` - 0x0074
 
-.. tabs::
+For example, to set the sensor gain for present ambient light level to 1.1, write the following::
 
-   .. group-tab:: nRF21, nRF52 and nRF53 DKs
-
-      1. Start the `nRF Connect for Mobile`_ application on your smartphone or tablet.
-      #. Power on the development kit.
-      #. Connect to the device from the nRF Connect application.
-         The device is advertising as "Mesh and Peripheral Coex".
-         The services of the connected device are shown.
-      #. In **Nordic LED Button Service**, enable notifications for the **Button** characteristic.
-      #. Press **Button 1** on the device.
-      #. Observe that notifications with the following values are displayed:
-
-         * ``Button released`` when **Button 1** is released.
-         * ``Button pressed`` when **Button 1** is pressed.
-
-      #. Write the following values to the LED characteristic in the **Nordic LED Button Service**:
-
-         * Value ``OFF`` to switch the **LED 2** on the development kit off.
-         * Value ``ON`` to switch the **LED 2** on the development kit on.
-
-   .. group-tab:: nRF54 DKs
-
-      1. Start the `nRF Connect for Mobile`_ application on your smartphone or tablet.
-      #. Power on the development kit.
-      #. Connect to the device from the nRF Connect application.
-         The device is advertising as "Mesh and Peripheral Coex".
-         The services of the connected device are shown.
-      #. In **Nordic LED Button Service**, enable notifications for the **Button** characteristic.
-      #. Press **Button 0** on the device.
-      #. Observe that notifications with the following values are displayed:
-
-         * ``Button released`` when **Button 0** is released.
-         * ``Button pressed`` when **Button 0** is pressed.
-
-      #. Write the following values to the LED characteristic in the **Nordic LED Button Service**:
-
-         * Value ``OFF`` to switch the **LED 1** on the development kit off.
-         * Value ``ON`` to switch the **LED 1** on the development kit on.
-
-.. note::
-   Once connected, the device will not advertise with the LBS Service UUID until the device is rebooted.
-   Reboot the device to restart the LBS Service UUID advertisements.
+   mesh models sensor setting-set 0x004E 0x0074 1.1
 
 Dependencies
 ************
 
 This sample uses the following |NCS| libraries:
 
-* :ref:`bt_mesh_onoff_srv_readme`
+* :ref:`bt_mesh_sensor_cli_readme`
 * :ref:`bt_mesh_dk_prov`
-* :ref:`lbs_readme`
 * :ref:`dk_buttons_and_leds_readme`
 
 In addition, it uses the following Zephyr libraries:
 
 * :file:`include/drivers/hwinfo.h`
-* :file:`include/zephyr/types.h`
-* :file:`lib/libc/minimal/include/errno.h`
-* :file:`include/sys/printk.h`
-* :file:`include/sys/byteorder.h`
 * :ref:`zephyr:kernel_api`:
 
   * :file:`include/kernel.h`
@@ -273,11 +242,9 @@ In addition, it uses the following Zephyr libraries:
 * :ref:`zephyr:bluetooth_api`:
 
   * :file:`include/bluetooth/bluetooth.h`
-  * :file:`include/bluetooth/hci.h`
-  * :file:`include/bluetooth/conn.h`
-  * :file:`include/bluetooth/uuid.h`
-  * :file:`include/bluetooth/gatt.h`
 
 * :ref:`zephyr:bluetooth_mesh`:
 
   * :file:`include/bluetooth/mesh.h`
+
+* :ref:`bluetooth_mesh_shell`
