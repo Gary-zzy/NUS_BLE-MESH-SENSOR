@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/Users/Gary/Desktop/Zephyr/NUS-BLE-MESH-SENSOR/52/_sysbuild/sysbuild/images/CMakeFiles/NUS-BLE-MESH-SENSOR"
+		},
+		{
+			"file" : "C:/Users/Gary/Desktop/Zephyr/NUS-BLE-MESH-SENSOR/52/_sysbuild/sysbuild/images/CMakeFiles/NUS-BLE-MESH-SENSOR.rule"
+		},
+		{
+			"file" : "C:/Users/Gary/Desktop/Zephyr/NUS-BLE-MESH-SENSOR/52/_sysbuild/sysbuild/images/CMakeFiles/NUS-BLE-MESH-SENSOR-complete.rule"
+		},
+		{
+			"file" : "C:/Users/Gary/Desktop/Zephyr/NUS-BLE-MESH-SENSOR/52/_sysbuild/sysbuild/images/NUS-BLE-MESH-SENSOR-prefix/src/NUS-BLE-MESH-SENSOR-stamp/NUS-BLE-MESH-SENSOR-build.rule"
+		},
+		{
+			"file" : "C:/Users/Gary/Desktop/Zephyr/NUS-BLE-MESH-SENSOR/52/_sysbuild/sysbuild/images/NUS-BLE-MESH-SENSOR-prefix/src/NUS-BLE-MESH-SENSOR-stamp/NUS-BLE-MESH-SENSOR-configure.rule"
+		},
+		{
+			"file" : "C:/Users/Gary/Desktop/Zephyr/NUS-BLE-MESH-SENSOR/52/_sysbuild/sysbuild/images/NUS-BLE-MESH-SENSOR-prefix/src/NUS-BLE-MESH-SENSOR-stamp/NUS-BLE-MESH-SENSOR-download.rule"
+		},
+		{
+			"file" : "C:/Users/Gary/Desktop/Zephyr/NUS-BLE-MESH-SENSOR/52/_sysbuild/sysbuild/images/NUS-BLE-MESH-SENSOR-prefix/src/NUS-BLE-MESH-SENSOR-stamp/NUS-BLE-MESH-SENSOR-install.rule"
+		},
+		{
+			"file" : "C:/Users/Gary/Desktop/Zephyr/NUS-BLE-MESH-SENSOR/52/_sysbuild/sysbuild/images/NUS-BLE-MESH-SENSOR-prefix/src/NUS-BLE-MESH-SENSOR-stamp/NUS-BLE-MESH-SENSOR-mkdir.rule"
+		},
+		{
+			"file" : "C:/Users/Gary/Desktop/Zephyr/NUS-BLE-MESH-SENSOR/52/_sysbuild/sysbuild/images/NUS-BLE-MESH-SENSOR-prefix/src/NUS-BLE-MESH-SENSOR-stamp/NUS-BLE-MESH-SENSOR-patch.rule"
+		},
+		{
+			"file" : "C:/Users/Gary/Desktop/Zephyr/NUS-BLE-MESH-SENSOR/52/_sysbuild/sysbuild/images/NUS-BLE-MESH-SENSOR-prefix/src/NUS-BLE-MESH-SENSOR-stamp/NUS-BLE-MESH-SENSOR-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"NUS-BLE-MESH-SENSOR"
+		],
+		"name" : "NUS-BLE-MESH-SENSOR"
+	}
+}

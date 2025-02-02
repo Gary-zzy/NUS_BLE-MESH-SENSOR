@@ -1,7 +1,0 @@
-osource "C:/Users/Gary/Desktop/Zephyr/ble_peripheral_lbs_coex/boards/shields/*/Kconfig.shield"
-osource "C:/Users/Gary/Desktop/Zephyr/ble_peripheral_lbs_coex_test/boards/shields/*/Kconfig.shield"
-osource "C:/Users/Gary/Desktop/Zephyr/central_uart/boards/shields/*/Kconfig.shield"
-osource "C:/Users/Gary/Desktop/Zephyr/peripheral_uart/boards/shields/*/Kconfig.shield"
-osource "C:/Users/Gary/Desktop/Zephyr/sensor_client/boards/shields/*/Kconfig.shield"
-osource "C:/Users/Gary/Desktop/Zephyr/sensor_server/boards/shields/*/Kconfig.shield"
-osource "C:/ncs/v2.9.0/nrf/boards/shields/*/Kconfig.shield"

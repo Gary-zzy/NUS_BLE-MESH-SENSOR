@@ -1,9 +1,9 @@
-C:\Users\Gary\Desktop\Zephyr\sensor_client\52\Kconfig\Kconfig.sysbuild.modules
-C:\Users\Gary\Desktop\Zephyr\sensor_client\52\Kconfig\boards\Kconfig.nrf52833dk
-C:\Users\Gary\Desktop\Zephyr\sensor_client\52\Kconfig\boards\Kconfig.sysbuild
-C:\Users\Gary\Desktop\Zephyr\sensor_client\52\Kconfig\soc\Kconfig.soc
-C:\Users\Gary\Desktop\Zephyr\sensor_client\52\Kconfig\soc\Kconfig.sysbuild
-C:\Users\Gary\Desktop\Zephyr\sensor_client\Kconfig.sysbuild
+C:\Users\Gary\Desktop\Zephyr\NUS-BLE-MESH-SENSOR\52\Kconfig\Kconfig.sysbuild.modules
+C:\Users\Gary\Desktop\Zephyr\NUS-BLE-MESH-SENSOR\52\Kconfig\boards\Kconfig.nrf52833dk
+C:\Users\Gary\Desktop\Zephyr\NUS-BLE-MESH-SENSOR\52\Kconfig\boards\Kconfig.sysbuild
+C:\Users\Gary\Desktop\Zephyr\NUS-BLE-MESH-SENSOR\52\Kconfig\soc\Kconfig.soc
+C:\Users\Gary\Desktop\Zephyr\NUS-BLE-MESH-SENSOR\52\Kconfig\soc\Kconfig.sysbuild
+C:\Users\Gary\Desktop\Zephyr\NUS-BLE-MESH-SENSOR\Kconfig.sysbuild
 C:\ncs\v2.9.0\nrf\sysbuild\Kconfig.appcore
 C:\ncs\v2.9.0\nrf\sysbuild\Kconfig.approtect
 C:\ncs\v2.9.0\nrf\sysbuild\Kconfig.bt_fast_pair
