@@ -1,0 +1,7 @@
+default: NUS+sensor_server
+build_dir: C:/Users/Gary/Desktop/Zephyr/NUS+sensor_server/52
+domains:
+  - name: NUS+sensor_server
+    build_dir: C:/Users/Gary/Desktop/Zephyr/NUS+sensor_server/52/NUS+sensor_server
+flash_order:
+  - NUS+sensor_server

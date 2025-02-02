@@ -1,0 +1,19 @@
+{
+  "toolchainPath": "c:\\ncs\\toolchains\\b620d30767",
+  "sdkPath": "c:\\ncs\\v2.9.0",
+  "board": "nrf52833dk/nrf52833",
+  "boardDirs": [
+    "c:\\ncs\\v2.9.0\\zephyr\\boards\\nordic\\nrf52833dk"
+  ],
+  "boardRevision": "",
+  "boardDir": "c:\\ncs\\v2.9.0\\zephyr\\boards\\nordic\\nrf52833dk",
+  "shouldBuild": true,
+  "optimizations": "none",
+  "cmakeArgs": [],
+  "confFiles": [],
+  "buildDirectory": "52",
+  "kconfigFragments": [],
+  "snippets": [],
+  "dtcOverlays": [],
+  "extraDtcOverlays": []
+}
